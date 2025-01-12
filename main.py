@@ -1,11 +1,6 @@
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
-from fastapi.responses import HTMLResponse
-from fastapi.staticfiles import StaticFiles
 
 app = FastAPI()
-
-# Static file setup
-app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # Chat room manager
 class ConnectionManager:
@@ -33,7 +28,7 @@ manager = ConnectionManager()
 
 @app.get("/")
 async def get():
-    return HTMLResponse(open("static/index.html").read())
+    return {"message": "Backend is running, but static files are served from GitHub Pages"}
 
 @app.websocket("/ws/{room}/{username}")
 async def websocket_endpoint(websocket: WebSocket, room: str, username: str):
